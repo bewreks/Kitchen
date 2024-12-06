@@ -17,6 +17,9 @@ namespace Kitchen.Scripts.Player
             var camera = container.Resolve<CinemachineCamera>();
             camera.Follow = player.transform;
             container.Bind<PlayerView>().FromInstance(player).AsSingle();
+            
+            container.Bind<PlayerMovementController>().FromNew().AsSingle();
+            container.Resolve<PlayerMovementController>();
         }
     }
 }

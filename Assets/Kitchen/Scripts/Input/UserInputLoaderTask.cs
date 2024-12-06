@@ -6,17 +6,17 @@ namespace Kitchen.Scripts.Input
 {
     public class UserInputLoaderTask : ILoaderTask
     {
-        public UniTask Load(DiContainer container)
+        public async UniTask Load(DiContainer container)
         {
             var inputActions = new InputActions();
             inputActions.Player.Enable();
             container.BindInstance(inputActions);
             
-            var movementController = new UserMovementController();
+            await UniTask.Delay(5); 
+            
+            var movementController = new UserInputController();
             container.Inject(movementController);
             container.BindInstance(movementController).AsSingle();
-            
-            return UniTask.CompletedTask;
         }
     }
 }
