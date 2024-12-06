@@ -56,7 +56,10 @@ namespace Kitchen.Scripts.Input
             }
 
             if (canMove)
-                player.transform.position += direction * (Time.deltaTime * settings.PlayerSpeed);
+            {
+                player.transform.position += direction * (Time.deltaTime * settings.PlayerRotationSpeed);
+                player.transform.forward = Vector3.Slerp(player.transform.forward, direction, Time.deltaTime * settings.PlayerRotationSpeed);
+            }
         }
 
         private bool CanMove(Vector3 direction)
@@ -64,7 +67,7 @@ namespace Kitchen.Scripts.Input
             var startPosition = player.transform.position;
             return !Physics.CapsuleCast(startPosition, 
                 startPosition + new Vector3(0, 2, 0), 
-                0.5f, direction, Time.deltaTime * settings.PlayerSpeed);
+                0.5f, direction, Time.deltaTime * settings.PlayerRotationSpeed);
         }
     }
 }
