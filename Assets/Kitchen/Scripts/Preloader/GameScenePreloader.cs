@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Kitchen.Scripts.Input;
 using Kitchen.Scripts.Player;
+using Kitchen.Scripts.Scriptables;
 using Zenject;
 
 namespace Kitchen.Scripts.Preloader
@@ -12,6 +13,7 @@ namespace Kitchen.Scripts.Preloader
         
         private readonly ILoaderTask[][] loaderTasks = new ILoaderTask[][]
         {
+            new ILoaderTask[] { new ScriptablesLoaderTask() },
             new ILoaderTask[] { new PlayerLoaderTask(), new UserInputLoaderTask() },
         };
 
