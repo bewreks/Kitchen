@@ -7,6 +7,11 @@ namespace Kitchen.Scripts.Input
         public Vector2 Direction;
     }
     
+    public struct CancelMovementSignal
+    {
+        
+    }
+    
     public struct InteractSignal
     {
         

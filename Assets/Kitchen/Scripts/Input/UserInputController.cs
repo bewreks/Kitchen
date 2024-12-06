@@ -13,6 +13,7 @@ namespace Kitchen.Scripts.Input
         public void Construct()
         {
             _signalBus.DeclareSignal<MovementSignal>();
+            _signalBus.DeclareSignal<CancelMovementSignal>();
             _signalBus.DeclareSignal<InteractSignal>();
             _signalBus.DeclareSignal<InteractCanceledSignal>();
             
@@ -34,10 +35,7 @@ namespace Kitchen.Scripts.Input
 
         private void MoveOnCanceled(InputAction.CallbackContext obj)
         {
-            _signalBus.Fire(new MovementSignal
-            {
-                Direction = Vector2.zero
-            });
+            _signalBus.Fire<CancelMovementSignal>();
         }
 
         private void MoveOnPerformed(InputAction.CallbackContext obj)

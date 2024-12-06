@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Kitchen.Scripts.Player.States;
 using Kitchen.Scripts.Preloader;
 using Kitchen.Scripts.Scriptables;
 using Unity.Cinemachine;
@@ -17,6 +18,11 @@ namespace Kitchen.Scripts.Player
             var camera = container.Resolve<CinemachineCamera>();
             camera.Follow = player.transform;
             container.Bind<PlayerView>().FromInstance(player).AsSingle();
+
+            container.Bind<PlayerMovementStateFactory>().AsSingle();
+
+            container.BindFactory<PlayerIdleState, PlayerIdleState.Factory>().WhenInjectedInto<PlayerMovementStateFactory>();
+            container.BindFactory<PlayerMovingState, PlayerMovingState.Factory>().WhenInjectedInto<PlayerMovementStateFactory>();
             
             container.Bind<PlayerMovementController>().FromNew().AsSingle();
             container.Resolve<PlayerMovementController>();
