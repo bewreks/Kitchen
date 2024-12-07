@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using UnityEngine;
+
 namespace Kitchen.Scripts.CodeGenerator
 {
     /// <summary>

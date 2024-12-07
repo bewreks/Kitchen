@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 namespace Kitchen.Scripts.Player.States
 {
     public interface IApplyDirection

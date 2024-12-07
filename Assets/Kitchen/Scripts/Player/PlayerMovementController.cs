@@ -1,4 +1,5 @@
-﻿using Kitchen.Scripts.Input;
+﻿using System;
+using Kitchen.Scripts.Input;
 using Kitchen.Scripts.Player.States;
 using Kitchen.Scripts.Scriptables;
 using UnityEngine;
@@ -6,13 +7,15 @@ using Zenject;
 
 namespace Kitchen.Scripts.Player
 {
-    public class PlayerMovementController : ITickable
+    public class PlayerMovementController : ITickable, IDisposable
     {
         [Inject] private PlayerView _player;
         [Inject] private SettingsScriptableObject _settings;
         [Inject] private SignalBus _signalBus;
-        [Inject] private TickableManager _tickableManager;
         [Inject] private PlayerMovementStateFactory _playerMovementStateFactory;
+        
+        [Inject] private TickableManager _tickableManager;
+        [Inject] private DisposableManager _disposableManager;
         
         private Vector2 _rawDirection;
         
@@ -23,6 +26,7 @@ namespace Kitchen.Scripts.Player
         {
             _movementState = _playerMovementStateFactory.CreateIdleState();
             _tickableManager.Add(this);
+            _disposableManager.Add(this);
             
             _signalBus.Subscribe<MovementSignal>(OnMoving);
             _signalBus.Subscribe<CancelMovementSignal>(OnIdle);
@@ -42,6 +46,12 @@ namespace Kitchen.Scripts.Player
         public void Tick()
         {
             _movementState.ApplyDirection(_rawDirection);
+        }
+        
+        public void Dispose()
+        {
+            _signalBus.Unsubscribe<MovementSignal>(OnMoving);
+            _signalBus.Unsubscribe<CancelMovementSignal>(OnIdle);
         }
     }
 }

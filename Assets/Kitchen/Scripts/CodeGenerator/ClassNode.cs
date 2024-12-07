@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-namespace Kitchen.Scripts.CodeGenerator
+﻿namespace Kitchen.Scripts.CodeGenerator
 {
     public struct ClassNode
     {

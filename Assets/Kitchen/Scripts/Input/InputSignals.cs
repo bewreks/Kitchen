@@ -21,4 +21,9 @@ namespace Kitchen.Scripts.Input
     {
         
     }
+    
+    public struct ExitToLobbySignal 
+    {
+    
+    }
 }

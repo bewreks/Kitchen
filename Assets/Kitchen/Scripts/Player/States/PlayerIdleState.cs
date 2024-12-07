@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Zenject;
+
 namespace Kitchen.Scripts.Player.States
 {
     public struct PlayerIdleState : IApplyDirection
