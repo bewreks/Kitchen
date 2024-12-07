@@ -1,5 +1,6 @@
 ﻿using System;
 using Kitchen.Scripts.Preloader;
+using MessagePipe;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -8,8 +9,17 @@ namespace Kitchen.Scripts.Input
 {
     public class UserInputController : IDisposable
     {
-        [Inject] private SignalBus _signalBus;
+        [Inject] private DiContainer _container;
         [Inject] private DisposableManager _disposableManager;
+        
+        [Inject] private ISubscriber<LoadingCompleteSignal> _cancelMovementSubscriber;
+        [Inject] private IPublisher<MovementSignal> _startPublisher;
+        [Inject] private IPublisher<CancelMovementSignal> _cancelPublisher;
+        [Inject] private IPublisher<InteractSignal> _interactPublisher;
+        [Inject] private IPublisher<InteractCanceledSignal> _interactCanceledPublisher;
+        [Inject] private IPublisher<ExitToLobbySignal> _exitToLobbyPublisher;
+        
+        [Inject] private ISubscriber<LoadingCompleteSignal> _loadingCompleteSubscriber;
         
         private InputActions _inputActions;
         
@@ -21,14 +31,8 @@ namespace Kitchen.Scripts.Input
             _disposableManager.Add(this);
             _disposableManager.Add(_inputActions);
             
-            _signalBus.DeclareSignal<MovementSignal>();
-            _signalBus.DeclareSignal<CancelMovementSignal>();
-            _signalBus.DeclareSignal<InteractSignal>();
-            _signalBus.DeclareSignal<InteractCanceledSignal>();
-            _signalBus.DeclareSignal<ExitToLobbySignal>();
-            
-            _signalBus.Subscribe<LoadingCompleteSignal>(OnLoadingComplete);
-            
+            _disposableManager.Add(_loadingCompleteSubscriber.Subscribe(OnLoadingComplete));
+
             _inputActions.Player.Move.performed += MoveOnPerformed;
             _inputActions.Player.Move.canceled += MoveOnCanceled;
             _inputActions.Player.Interact.performed += OnInteract;
@@ -38,32 +42,32 @@ namespace Kitchen.Scripts.Input
         
         private void OnExit(InputAction.CallbackContext obj)
         {
-            _signalBus.Fire(new ExitToLobbySignal());
+            _exitToLobbyPublisher.Publish(new ExitToLobbySignal());
         }
         
-        private void OnLoadingComplete()
+        private void OnLoadingComplete(LoadingCompleteSignal args)
         {
             _inputActions.Player.Enable();
         }
 
         private void OnInteractCanceled(InputAction.CallbackContext obj)
         {
-            _signalBus.Fire(new InteractCanceledSignal());
+            _interactCanceledPublisher.Publish(new InteractCanceledSignal());
         }
 
         private void OnInteract(InputAction.CallbackContext obj)
         {
-            _signalBus.Fire(new InteractSignal());
+            _interactPublisher.Publish(new InteractSignal());
         }
 
         private void MoveOnCanceled(InputAction.CallbackContext obj)
         {
-            _signalBus.Fire<CancelMovementSignal>();
+            _cancelPublisher.Publish(new CancelMovementSignal());
         }
 
         private void MoveOnPerformed(InputAction.CallbackContext obj)
         {
-            _signalBus.Fire(new MovementSignal
+            _startPublisher.Publish(new MovementSignal
             {
                 Direction = obj.ReadValue<Vector2>()
             });
@@ -71,7 +75,11 @@ namespace Kitchen.Scripts.Input
         
         public void Dispose()
         {
-            _signalBus.Unsubscribe<LoadingCompleteSignal>(OnLoadingComplete);
+            _inputActions.Player.Move.performed -= MoveOnPerformed;
+            _inputActions.Player.Move.canceled -= MoveOnCanceled;
+            _inputActions.Player.Interact.performed -= OnInteract;
+            _inputActions.Player.Interact.canceled -= OnInteractCanceled;
+            _inputActions.Player.Exit.performed -= OnExit;
         }
     }
 }

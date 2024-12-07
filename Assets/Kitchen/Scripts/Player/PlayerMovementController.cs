@@ -2,6 +2,7 @@
 using Kitchen.Scripts.Input;
 using Kitchen.Scripts.Player.States;
 using Kitchen.Scripts.Scriptables;
+using MessagePipe;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +12,8 @@ namespace Kitchen.Scripts.Player
     {
         [Inject] private PlayerView _player;
         [Inject] private SettingsScriptableObject _settings;
-        [Inject] private SignalBus _signalBus;
+        [Inject] private ISubscriber<MovementSignal> _movementSubscriber;
+        [Inject] private ISubscriber<CancelMovementSignal> _cancelMovementSubscriber;
         [Inject] private PlayerMovementStateFactory _playerMovementStateFactory;
         
         [Inject] private TickableManager _tickableManager;
@@ -27,12 +29,12 @@ namespace Kitchen.Scripts.Player
             _movementState = _playerMovementStateFactory.CreateIdleState();
             _tickableManager.Add(this);
             _disposableManager.Add(this);
-            
-            _signalBus.Subscribe<MovementSignal>(OnMoving);
-            _signalBus.Subscribe<CancelMovementSignal>(OnIdle);
+
+            _disposableManager.Add(_movementSubscriber.Subscribe(OnMoving));
+            _disposableManager.Add(_cancelMovementSubscriber.Subscribe(OnIdle));
         }
         
-        private void OnIdle()
+        private void OnIdle(CancelMovementSignal args)
         {
             _movementState = _playerMovementStateFactory.CreateIdleState();
         }
@@ -50,8 +52,7 @@ namespace Kitchen.Scripts.Player
         
         public void Dispose()
         {
-            _signalBus.Unsubscribe<MovementSignal>(OnMoving);
-            _signalBus.Unsubscribe<CancelMovementSignal>(OnIdle);
+            
         }
     }
 }

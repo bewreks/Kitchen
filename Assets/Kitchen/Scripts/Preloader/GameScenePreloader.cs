@@ -2,8 +2,10 @@
 using Cysharp.Threading.Tasks;
 using Kitchen.Scripts.Input;
 using Kitchen.Scripts.MainGame;
+using Kitchen.Scripts.Messages;
 using Kitchen.Scripts.Player;
 using Kitchen.Scripts.Scriptables;
+using MessagePipe;
 using Zenject;
 
 namespace Kitchen.Scripts.Preloader
@@ -11,13 +13,15 @@ namespace Kitchen.Scripts.Preloader
     public class GameScenePreloader : IInitializable
     {
         [Inject] private DiContainer _container;
-        [Inject] private SignalBus _signalBus;
         [Inject] private InitializableManager _initializableManager;
+        
+        [Inject] private LazyInject<IPublisher<LoadingCompleteSignal>> _loadingCompletePublisher;
         
         [Inject] private CancellationTokenSource _cts;
         
         private readonly ILoaderTask[][] loaderTasks = new ILoaderTask[][]
         {
+            new ILoaderTask[] { new MessagesLoadingTask() },
             new ILoaderTask[] { new ScriptablesLoaderTask() },
             new ILoaderTask[] { new PlayerLoaderTask(), new UserInputLoaderTask() },
             new ILoaderTask[] { new GameLoaderTask() }
@@ -26,8 +30,6 @@ namespace Kitchen.Scripts.Preloader
         [Inject]
         private void Construct()
         {
-            _signalBus.DeclareSignal<LoadingCompleteSignal>();
-            
             _initializableManager.Add(this);
         }
 
@@ -40,7 +42,7 @@ namespace Kitchen.Scripts.Preloader
                 if (_cts.Token.IsCancellationRequested) return;
             }
             
-            _signalBus.Fire<LoadingCompleteSignal>();
+            _loadingCompletePublisher.Value.Publish(new LoadingCompleteSignal());
         }
     }
 }

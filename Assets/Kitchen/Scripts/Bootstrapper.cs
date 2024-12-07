@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Kitchen.Scripts.Preloader;
+using MessagePipe;
 using Unity.Cinemachine;
 using UnityEngine;
 using Zenject;
@@ -16,8 +17,8 @@ namespace Kitchen.Scripts
         {
             Container.Settings = new ZenjectSettings(ValidationErrorResponses.Throw, RootResolveMethods.NonLazyOnly, false);
 
-            SignalBusInstaller.Install(Container);
-
+            Container.BindMessagePipe();
+            
             Container.BindInstance(_mainCamera).AsCached();
             Container.BindInstance(_cts).AsCached();
             

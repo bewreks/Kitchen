@@ -1,5 +1,6 @@
 ﻿using System;
 using Kitchen.Scripts.Input;
+using MessagePipe;
 using UnityEngine.SceneManagement;
 using Zenject;
 
@@ -7,22 +8,22 @@ namespace Kitchen.Scripts.MainGame
 {
     public class GameManager : IDisposable
     {
-        [Inject] private SignalBus _signalBus;
+        [Inject] private ISubscriber<ExitToLobbySignal> _cancelMovementSubscriber;
+        [Inject] private DisposableManager _disposableManager;
         
         [Inject]
         private void Construct()
         {
-            _signalBus.Subscribe<ExitToLobbySignal>(OnExitToLobby);
+            _disposableManager.Add(_cancelMovementSubscriber.Subscribe(OnExitToLobby));
         }
         
-        private void OnExitToLobby()
+        private void OnExitToLobby(ExitToLobbySignal args)
         {
             SceneManager.LoadScene(Generated.Scenes.LobbyScene, LoadSceneMode.Single);
         }
         
         public void Dispose()
         {
-            _signalBus.Unsubscribe<ExitToLobbySignal>(OnExitToLobby);
         }
     }
 }
