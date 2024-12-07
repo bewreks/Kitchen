@@ -21,12 +21,12 @@ namespace Kitchen.Scripts.Player.States
 
             if (!canMove)
             {
-                direction = new Vector3(rawDirection.x, 0, 0);
+                direction = new Vector3(rawDirection.x, 0, 0).normalized;
                 canMove = CanMove(direction);
 
                 if (!canMove)
                 {
-                    direction = new Vector3(0, 0, rawDirection.y);
+                    direction = new Vector3(0, 0, rawDirection.y).normalized;
                     canMove = CanMove(direction);
                 }
             }
@@ -34,7 +34,7 @@ namespace Kitchen.Scripts.Player.States
             if (canMove)
             {
                 _player.transform.position += direction * (Time.deltaTime * _settings.PlayerRotationSpeed);
-                _player.transform.forward = Vector3.Slerp(_player.transform.forward, direction, Time.deltaTime * _settings.PlayerRotationSpeed);
+                _player.transform.forward = Vector3.Slerp(_player.transform.forward, new Vector3(rawDirection.x, 0, rawDirection.y), Time.deltaTime * _settings.PlayerRotationSpeed);
             }
         }
         
