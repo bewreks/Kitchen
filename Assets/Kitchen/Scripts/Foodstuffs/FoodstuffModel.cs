@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using AYellowpaper.SerializedCollections;
+﻿using AYellowpaper.SerializedCollections;
 using Kitchen.Scripts.Generated;
 using UnityEngine;
 
@@ -8,6 +7,7 @@ namespace Kitchen.Scripts.Foodstuffs
     [CreateAssetMenu(fileName = "Foodstuff", menuName = "Game/Foodstuff")]
     public class FoodstuffModel : ScriptableObject
     {
+        public int FoodstuffId;
         public string Name;
         public Sprite Icon;
         public GameObject Prefab;
