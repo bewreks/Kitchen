@@ -1,11 +1,10 @@
 ﻿namespace Kitchen.Scripts.CodeGenerator
 {
-    public struct ClassNode
+    public struct EnumNode
     {
         public string Name;
         public string Path;
         public string Namespace;
-        public PropertyNode<string>[] Properties;
+        public PropertyNode<int>[] Properties;
     }
-
 }

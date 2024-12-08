@@ -41,6 +41,36 @@ namespace Kitchen.Scripts.CodeGenerator
             }
         }
         
+        public static void Generate(EnumNode node)
+        {
+            node.Name = node.Name.Replace(" ", "_").UnderscoreToCamelCase();
+            var writer = new StreamWriter(Application.dataPath + node.Path + node.Name + ".cs");
+            var builder = new StringBuilder();
+            try
+            {
+                builder.AppendLine("namespace " + node.Namespace);
+                builder.AppendLine("{");
+                builder.AppendLine("\tpublic enum " + node.Name);
+                builder.AppendLine("\t{");
+                foreach (var nodeProperty in node.Properties)
+                {
+                    builder.AppendLine("\t\t" + nodeProperty.Name.Replace('.', '_').UnderscoreToCamelCase() + " = " + nodeProperty.Value + ",");
+                }
+                builder.AppendLine("\t}");
+                builder.AppendLine("}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
+            }
+            finally
+            {
+                writer.Write(builder.ToString());
+                writer.Close();
+            }
+        }
+        
         private static string UnderscoreToCamelCase(this string name)
         {
             if (string.IsNullOrEmpty(name) || !name.Contains("_"))
