@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Kitchen.Scripts.Preloader;
+using Kitchen.Scripts.Loading;
 using Zenject;
 
 namespace Kitchen.Scripts.Input

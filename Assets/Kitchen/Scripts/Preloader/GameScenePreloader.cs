@@ -1,7 +1,8 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Kitchen.Scripts.Input;
-using Kitchen.Scripts.MainGame;
+using Kitchen.Scripts.KitchenGame;
+using Kitchen.Scripts.Loading;
 using Kitchen.Scripts.Messages;
 using Kitchen.Scripts.Player;
 using Kitchen.Scripts.Player.Loaders;

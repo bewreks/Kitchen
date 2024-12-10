@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Kitchen.Scripts.Generated;
+using Kitchen.Scripts.Loading;
 using Kitchen.Scripts.Player.States;
 using Kitchen.Scripts.Player.Views;
-using Kitchen.Scripts.Preloader;
 using Unity.Cinemachine;
 using UnityEngine.AddressableAssets;
 using Zenject;

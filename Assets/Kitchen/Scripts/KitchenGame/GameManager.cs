@@ -1,11 +1,10 @@
 ﻿using System;
 using Kitchen.Scripts.Generated;
-using Kitchen.Scripts.Input;
+using Kitchen.Scripts.Messages;
 using MessagePipe;
 using UnityEngine.SceneManagement;
 using Zenject;
-
-namespace Kitchen.Scripts.MainGame
+namespace Kitchen.Scripts.KitchenGame
 {
     public class GameManager : IDisposable
     {

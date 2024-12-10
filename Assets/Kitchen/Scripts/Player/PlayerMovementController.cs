@@ -1,5 +1,5 @@
 ﻿using System;
-using Kitchen.Scripts.Input;
+using Kitchen.Scripts.Messages;
 using Kitchen.Scripts.Player.States;
 using Kitchen.Scripts.Player.Views;
 using Kitchen.Scripts.Scriptables;

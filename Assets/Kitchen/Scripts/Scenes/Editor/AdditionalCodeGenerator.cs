@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Kitchen.Scripts.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
-
-namespace Kitchen.Scripts.CodeGenerator.Editor
+namespace Kitchen.Scripts.Scenes.Editor
 {
     public partial class AdditionalCodeGenerator : MonoBehaviour
     {

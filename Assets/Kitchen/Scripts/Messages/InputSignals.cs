@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-
-namespace Kitchen.Scripts.Input
+namespace Kitchen.Scripts.Messages
 {
     public struct MovementSignal
     {

@@ -1,4 +1,4 @@
-﻿namespace Kitchen.Scripts.Game
+﻿namespace Kitchen.Scripts.KitchenGame
 {
     public class KitchenGameModel
     {

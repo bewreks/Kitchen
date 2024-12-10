@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Kitchen.Scripts.Generated;
-using Kitchen.Scripts.Preloader;
+using Kitchen.Scripts.Loading;
 using UnityEngine.AddressableAssets;
 using Zenject;
 
