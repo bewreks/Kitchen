@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Kitchen.Scripts.Generated;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
@@ -13,7 +14,7 @@ namespace Kitchen.Scripts.Lobby
         public override void InstallBindings()
         {
             QuitButton.onClick.AddListener(Application.Quit);
-            PlayButton.onClick.AddListener(() => SceneManager.LoadScene(Generated.Scenes.GameScene));
+            PlayButton.onClick.AddListener(() => SceneManager.LoadScene(Scenes.GameScene));
         }
     }
 }

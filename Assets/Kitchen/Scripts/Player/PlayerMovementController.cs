@@ -1,6 +1,7 @@
 ﻿using System;
 using Kitchen.Scripts.Input;
 using Kitchen.Scripts.Player.States;
+using Kitchen.Scripts.Player.Views;
 using Kitchen.Scripts.Scriptables;
 using MessagePipe;
 using UnityEngine;

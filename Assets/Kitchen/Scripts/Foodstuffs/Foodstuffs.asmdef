@@ -1,0 +1,18 @@
+{
+    "name": "Foodstuffs",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d525ad6bd40672747bde77962f1c401e",
+        "GUID:0b344699c89366c428bdd7f2ab32c7c4",
+        "GUID:085cefed769ce6f4dbec6ca58344f96e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

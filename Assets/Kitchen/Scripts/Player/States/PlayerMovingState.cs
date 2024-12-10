@@ -1,4 +1,5 @@
-﻿using Kitchen.Scripts.Scriptables;
+﻿using Kitchen.Scripts.Player.Views;
+using Kitchen.Scripts.Scriptables;
 using UnityEngine;
 using Zenject;
 

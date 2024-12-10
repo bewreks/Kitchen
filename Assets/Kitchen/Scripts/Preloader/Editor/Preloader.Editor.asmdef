@@ -1,0 +1,17 @@
+{
+    "name": "Preloader.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0b344699c89366c428bdd7f2ab32c7c4",
+        "GUID:69448af7b92c7f342b298e06a37122aa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

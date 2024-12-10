@@ -11,16 +11,16 @@ namespace Kitchen.Scripts.CodeGenerator
     public static class SimpleCodeGenerator
     {
 
-        public static void Generate(ClassNode node)
+        public static void Generate(in ClassNode node)
         {
-            node.Name = node.Name.Replace(" ", "_").UnderscoreToCamelCase();
-            var writer = new StreamWriter(Application.dataPath + node.Path + node.Name + ".cs");
+            var name = node.Name.Replace(" ", "_").UnderscoreToCamelCase();
+            var writer = new StreamWriter(Application.dataPath + node.Path + name + ".cs");
             var builder = new StringBuilder();
             try
             {
                 builder.AppendLine("namespace " + node.Namespace);
                 builder.AppendLine("{");
-                builder.AppendLine("\tpublic static class " + node.Name);
+                builder.AppendLine("\tpublic static class " + name);
                 builder.AppendLine("\t{");
                 foreach (var nodeProperty in node.Properties)
                 {
@@ -41,16 +41,16 @@ namespace Kitchen.Scripts.CodeGenerator
             }
         }
         
-        public static void Generate(EnumNode node)
+        public static void Generate(in EnumNode node)
         {
-            node.Name = node.Name.Replace(" ", "_").UnderscoreToCamelCase();
-            var writer = new StreamWriter(Application.dataPath + node.Path + node.Name + ".cs");
+            var name = node.Name.Replace(" ", "_").UnderscoreToCamelCase();
+            var writer = new StreamWriter(Application.dataPath + node.Path + name + ".cs");
             var builder = new StringBuilder();
             try
             {
                 builder.AppendLine("namespace " + node.Namespace);
                 builder.AppendLine("{");
-                builder.AppendLine("\tpublic enum " + node.Name);
+                builder.AppendLine("\tpublic enum " + name);
                 builder.AppendLine("\t{");
                 foreach (var nodeProperty in node.Properties)
                 {
