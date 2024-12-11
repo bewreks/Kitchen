@@ -5,6 +5,7 @@ using Kitchen.Scripts.Loading;
 using Kitchen.Scripts.Player.States;
 using Kitchen.Scripts.Player.Views;
 using Unity.Cinemachine;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Zenject;
 namespace Kitchen.Scripts.Player.Loaders
@@ -13,14 +14,23 @@ namespace Kitchen.Scripts.Player.Loaders
     {
         public async UniTask Load(DiContainer container, CancellationToken token)
         {
-            var playerObject = await Addressables.InstantiateAsync(Prefabs.PlayerPrefab).Task;
+            var handle = LoadingManager.Load(token, Prefabs.PlayerPrefab);
+
+            await handle;
 
             if (token.IsCancellationRequested)
             {
-                Addressables.ReleaseInstance(playerObject);
                 return;
             }
+
+            var playerObject = await LoadingManager.Instantiate(Prefabs.PlayerPrefab, token);
             
+            if (token.IsCancellationRequested)
+            {
+                LoadingManager.Release(Prefabs.PlayerPrefab, playerObject);
+                return;
+            }
+
             var player = playerObject.GetComponent<PlayerView>();
             var camera = container.Resolve<CinemachineCamera>();
             camera.Follow = player.transform;

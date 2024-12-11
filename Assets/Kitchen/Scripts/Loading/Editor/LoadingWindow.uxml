@@ -1,0 +1,15 @@
+<UXML xmlns="UnityEngine.UIElements" editor-extension-mode="False">
+    <VisualElement style="flex-grow: 1; align-content: center; flex-direction: row; height: 15px; max-height: 15px;">
+        <Button text="Instantiate" name="Instantiate" style="width: 120px; flex-direction: row; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 1px; margin-bottom: 0; margin-left: 0;" />
+        <Button text="Release" tabindex="1" name="Release" style="width: 120px; opacity: 1; overflow: hidden; visibility: visible; flex-direction: row; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; margin-top: 0; margin-right: 1px; margin-bottom: 0; margin-left: 0;" />
+        <Button text="Clear" tabindex="2" name="Clear" style="width: 120px; flex-direction: row; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 1px; margin-bottom: 0; margin-left: 0;" />
+    </VisualElement>
+    <MultiColumnListView fixed-item-height="20" class="the-uxml-multi-column-listview" style="min-width: 405px; width: auto;">
+        <Columns>
+            <Column name="Key" title="Key" width="120" visible="true" min-width="120px" />
+            <Column name="Status" title="Status" width="80" min-width="80px" />
+            <Column name="Progress" title="%" width="35px" />
+            <Column name="Count" title="Cnt" width="50px" min-width="50px" />
+        </Columns>
+    </MultiColumnListView>
+</UXML>

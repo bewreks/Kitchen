@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Kitchen.Scripts.Loading;
 using Kitchen.Scripts.Preloader;
 using MessagePipe;
 using Unity.Cinemachine;
@@ -29,6 +30,7 @@ namespace Kitchen.Scripts
 
         private void OnDestroy()
         {
+            LoadingManager.Clear();
             _cts.Cancel();
             _cts.Dispose();
         }
